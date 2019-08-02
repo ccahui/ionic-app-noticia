@@ -1,0 +1,15 @@
+<ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{ noticia.source.name }} - {{ noticia.publishedAt | relativeTime }}</ion-card-subtitle>
+      <ion-card-title>{{ noticia.title }}</ion-card-title>
+    </ion-card-header>
+    <img *ngIf="noticia.urlToImage" [src]="noticia.urlToImage" />
+
+    <ion-card-content>
+
+      <!-- <div class="ion-hide-sm-down">-->
+      <p>
+        {{noticia.description}}
+      </p>
+    </ion-card-content>
+  </ion-card>

@@ -1,9 +1,25 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border>
+  <ion-toolbar color="light">
     <ion-title>
-      Tab Two
+      Encabezados
     </ion-title>
   </ion-toolbar>
+
+
+  <!-- Default Segment -->
+  <ion-segment  #segmento (ionChange)="segmentChanged($event)" scrollable>
+
+    <ion-segment-button *ngFor="let categoria of categorias" [value]="categoria"
+      (ionSelect)="scrollHorizontalCenter($event)">
+      <ion-label class="ion-text-capitalize">{{ categoria }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <app-noticias [noticias]="noticias"></app-noticias>
+
+</ion-content>

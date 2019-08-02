@@ -1,8 +1,12 @@
-<ion-grid fixed>
+<ion-grid fixed class="grid-spinner">
     <ion-row>
-
       <ion-col size="12" size-md="6" size-lg="4" *ngFor="let noticia of noticias">
       <app-noticia [noticia]="noticia"></app-noticia>
       </ion-col> 
     </ion-row>
+    <ion-row *ngIf="isSpinner" class="row-spinner">
+      <ion-spinner color="primary"></ion-spinner>
+    </ion-row>
+      
+    
   </ion-grid>

@@ -26,6 +26,7 @@ export class Tab2Page implements OnInit {
     this.isSpinner = true;
     this.noticias = [];
     this.elementSegment.value = this.categorias[0];
+    this.elementInfiniteScroll.disabled = true;
     this.obtenerNoticiasPorCategoria(this.elementSegment.value);
   }
 
@@ -34,8 +35,8 @@ export class Tab2Page implements OnInit {
   */
   segmentChanged() {
     this.noticias = [];
+    this.elementInfiniteScroll.disabled = true;
     this.obtenerNoticiasPorCategoria(this.elementSegment.value);
-    this.elementInfiniteScroll.disabled = false;
   }
 
   obtenerNoticiasPorCategoria(categoria: string) {
@@ -45,6 +46,7 @@ export class Tab2Page implements OnInit {
       .pipe(
         finalize(() => {
           this.isSpinner = false;
+          this.elementInfiniteScroll.disabled = false;
         }))
       .subscribe(TopHeadlinesCategoria => {
         console.log('Resultados', TopHeadlinesCategoria.totalResults);

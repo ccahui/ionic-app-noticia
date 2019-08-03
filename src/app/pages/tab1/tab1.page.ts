@@ -21,24 +21,26 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.noticias = [];
     this.isSpinner = true;
-    this.obtenerTitularesDeNoticias();
+    this.obtenerTitularesDeNoticiasPrimeraVez();
+    this.elementInfiniteScroll.disabled = true;
   }
-
-  obtenerTitularesDeNoticias() {
+  
+  obtenerTitularesDeNoticiasPrimeraVez() {
 
     this.isSpinner = true;
     this.noticiasService.obtenerTitularesDeNoticias()
       .pipe(
         finalize(() => {
           this.isSpinner = false;
+          this.elementInfiniteScroll.disabled = false;
         }))
       .subscribe((TopHeadlines) => {
         this.noticias.push(...TopHeadlines.articles);
       });
-
   }
 
   loadDataInfiniteScroll() {
+
     this.noticiasService.obtenerTitularesDeNoticias()
       .pipe(
         finalize(() => {

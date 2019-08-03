@@ -6,7 +6,7 @@
   </ion-toolbar>
 
 
-  <!-- Default Segment -->
+  <!-- Default Segment  Esto se puede reutilzar como un componente -->
   <ion-segment  #segmento (ionChange)="segmentChanged()" scrollable>
 
     <ion-segment-button *ngFor="let categoria of categorias" [value]="categoria"
@@ -21,7 +21,7 @@
 
 <ion-content>
   <app-noticias [noticias]="noticias" [isSpinner]="isSpinner"></app-noticias>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll($event)">
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll()">
     <ion-infinite-scroll-content>
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

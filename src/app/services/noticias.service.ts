@@ -43,4 +43,7 @@ export class NoticiasService {
     console.log('Encabezados:', this.categoriaActual, this.paginaCategoria);
     return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}&page=${this.paginaCategoria}`);
   }
+  reiniciarPaginacionTitulareNoticias() {
+    this.paginaTopHeadlines = 0;
+  }
 }

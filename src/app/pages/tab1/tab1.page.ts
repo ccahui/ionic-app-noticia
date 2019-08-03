@@ -24,7 +24,7 @@ export class Tab1Page implements OnInit {
     this.obtenerTitularesDeNoticiasPrimeraVez();
     this.elementInfiniteScroll.disabled = true;
   }
-  
+
   obtenerTitularesDeNoticiasPrimeraVez() {
 
     this.isSpinner = true;
@@ -54,5 +54,20 @@ export class Tab1Page implements OnInit {
 
       });
   }
+  doRefresh(event) {
+    this.loadRefresh(event);
+  }
 
+  loadRefresh(event) {
+    this.noticiasService.reiniciarPaginacionTitulareNoticias();
+    this.noticiasService.obtenerTitularesDeNoticias()
+      .pipe(
+        finalize(() => {
+          event.target.complete();
+          this.elementInfiniteScroll.disabled = false;
+        }))
+      .subscribe((TopHeadlines) => {
+        this.noticias = TopHeadlines.articles;
+      });
+  }
 }

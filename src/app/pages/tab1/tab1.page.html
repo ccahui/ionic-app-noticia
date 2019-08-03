@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
   <app-noticias [noticias]="noticias" [isSpinner]="isSpinner"></app-noticias>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll()">

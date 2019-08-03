@@ -14,7 +14,10 @@ const headers = new HttpHeaders({
 
 export class NoticiasService {
 
-  pagina = 0;
+  // Manejo de Paginacion para TopHeadlines(Tab1Component) y CategoriaTopHeadline(Tab1Component)
+  paginaTopHeadlines = 0;
+  categoriaActual = '';
+  paginaCategoria = 0;
   constructor(private http: HttpClient) { }
 
   ejecutarQuery<T>(query: string) {
@@ -23,11 +26,21 @@ export class NoticiasService {
   }
 
   obtenerTitularesDeNoticias() {
-    console.log(this.pagina);
-    this.pagina++;
-    return this.ejecutarQuery<TopHeadlines>(`/top-headlines?country=us&page=${this.pagina}`);
+
+    this.paginaTopHeadlines++;
+    console.log('Titulares:', this.paginaTopHeadlines);
+    return this.ejecutarQuery<TopHeadlines>(`/top-headlines?country=us&page=${this.paginaTopHeadlines}`);
   }
+
   obtenerTitularesPorCategoria(categoria: string) {
-    return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}`);
+
+    if (this.categoriaActual !== categoria) {
+      this.categoriaActual = categoria;
+      this.paginaCategoria = 1;
+    } else {
+      this.paginaCategoria++;
+    }
+    console.log('Encabezados:', this.categoriaActual, this.paginaCategoria);
+    return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}&page=${this.paginaCategoria}`);
   }
 }

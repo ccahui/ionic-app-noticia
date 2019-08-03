@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { IonSegment } from '@ionic/angular';
-import { Article, TopHeadlines } from '../../interfaces/interfaces';
+import { IonSegment, IonInfiniteScroll } from '@ionic/angular';
+import { Article } from '../../interfaces/interfaces';
 import { NoticiasService } from '../../services/noticias.service';
 import { finalize } from 'rxjs/operators';
 
@@ -13,28 +13,32 @@ export class Tab2Page implements OnInit {
 
 
   categorias = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
-  categoriaActual: string;
+  // categoriaActual: string;
   noticias: Article[];
   isSpinner: boolean;
 
-  @ViewChild('segmento', { static: true }) segment: IonSegment;
+  @ViewChild('segmento', { static: true }) elementSegment: IonSegment;
+  @ViewChild(IonInfiniteScroll, { static: true }) elementInfiniteScroll: IonInfiniteScroll;
 
   constructor(private noticiaService: NoticiasService) { }
 
   ngOnInit() {
     this.isSpinner = true;
     this.noticias = [];
-    this.categoriaActual = this.categorias[0];
-    this.segment.value = this.categoriaActual;
-    this.obtenerNoticiasPorCategoria(this.categoriaActual);
+    this.elementSegment.value = this.categorias[0];
+    this.obtenerNoticiasPorCategoria(this.elementSegment.value);
   }
-  segmentChanged(event) {
 
-    this.categoriaActual = event.detail.value;
+  /*
+  * HABILITO INFINITE SCROLL, puede encontrarse DESABILITADO
+  */
+  segmentChanged() {
     this.noticias = [];
-    this.obtenerNoticiasPorCategoria(this.categoriaActual);
+    this.obtenerNoticiasPorCategoria(this.elementSegment.value);
+    this.elementInfiniteScroll.disabled = false;
   }
-  async obtenerNoticiasPorCategoria(categoria: string) {
+
+  obtenerNoticiasPorCategoria(categoria: string) {
 
     this.isSpinner = true;
     this.noticiaService.obtenerTitularesPorCategoria(categoria)
@@ -43,19 +47,33 @@ export class Tab2Page implements OnInit {
           this.isSpinner = false;
         }))
       .subscribe(TopHeadlinesCategoria => {
+        console.log('Resultados', TopHeadlinesCategoria.totalResults);
         this.noticias.push(...TopHeadlinesCategoria.articles);
 
       });
   }
+
   scrollHorizontalCenter(event) {
-    // Segmento Scroll Horizontal
-    //   if (this.lista) {
-    //    this.lista.el.scrollIntoView();
-    // }
     event.target.scrollIntoView({
       behavior: 'smooth',
       inline: 'center',
     });
 
+  }
+
+  loadDataInfiniteScroll() {
+    this.noticiaService.obtenerTitularesPorCategoria(this.elementSegment.value)
+      .pipe(
+        finalize(() => {
+          this.elementInfiniteScroll.complete();
+        }))
+      .subscribe((TopHeadlinesCategoria) => {
+
+        if (TopHeadlinesCategoria.articles.length === 0) {
+          this.elementInfiniteScroll.disabled = true; // DESABILITO EL INFINITE SCROLL
+        }
+        this.noticias.push(...TopHeadlinesCategoria.articles);
+
+      });
   }
 }

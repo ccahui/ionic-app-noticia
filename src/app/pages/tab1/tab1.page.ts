@@ -14,6 +14,7 @@ export class Tab1Page implements OnInit {
   noticias: Article[];
   isSpinner: boolean;
 
+  @ViewChild(IonInfiniteScroll, { static: true }) elementInfiniteScroll: IonInfiniteScroll;
   constructor(private noticiasService: NoticiasService) {
 
   }
@@ -37,16 +38,15 @@ export class Tab1Page implements OnInit {
 
   }
 
-  loadDataInfiniteScroll(event) {
-    console.log('Infinite Scroll');
+  loadDataInfiniteScroll() {
     this.noticiasService.obtenerTitularesDeNoticias()
       .pipe(
         finalize(() => {
-          event.target.complete();
+          this.elementInfiniteScroll.complete(); // Oculta el Spinner
         }))
       .subscribe((TopHeadlines) => {
         if (TopHeadlines.articles.length === 0) {
-          event.target.disabled = true;
+          this.elementInfiniteScroll.disabled = true; // Desabilita InfiniteScroll para su futuro uso
         }
         this.noticias.push(...TopHeadlines.articles);
 

@@ -9,8 +9,8 @@
 
 <ion-content>
   <app-noticias [noticias]="noticias" [isSpinner]="isSpinner"></app-noticias>
-  
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll($event)">
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll()">
     <ion-infinite-scroll-content>
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

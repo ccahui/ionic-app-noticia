@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DataLocalService } from 'src/app/services/data-local.service';
+import { Article } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,7 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(public dataLocal: DataLocalService) {
+  }
 
 }

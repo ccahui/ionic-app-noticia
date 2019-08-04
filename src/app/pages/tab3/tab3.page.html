@@ -1,9 +1,11 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border>
+  <ion-toolbar color="light">
     <ion-title>
-      Tab Three
+      Favoritos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <app-noticias [noticias]="dataLocal.noticias"></app-noticias>
+</ion-content>

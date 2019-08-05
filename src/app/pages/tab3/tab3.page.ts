@@ -11,5 +11,8 @@ export class Tab3Page {
 
   constructor(public dataLocal: DataLocalService) {
   }
+  hayNoticiasFavoritos() {
+    return this.dataLocal.noticias.length > 0;
+  }
 
 }

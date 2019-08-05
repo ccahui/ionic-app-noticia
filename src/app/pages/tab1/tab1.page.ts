@@ -28,7 +28,7 @@ export class Tab1Page implements OnInit {
   obtenerTitularesDeNoticiasPrimeraVez() {
 
     this.isSpinner = true;
-    this.noticiasService.obtenerTitularesDeNoticias()
+    this.noticiasService.obtenerTitulares()
       .pipe(
         finalize(() => {
           this.isSpinner = false;
@@ -41,7 +41,7 @@ export class Tab1Page implements OnInit {
 
   loadDataInfiniteScroll() {
 
-    this.noticiasService.obtenerTitularesDeNoticias()
+    this.noticiasService.obtenerTitulares()
       .pipe(
         finalize(() => {
           this.elementInfiniteScroll.complete(); // Oculta el Spinner
@@ -60,7 +60,7 @@ export class Tab1Page implements OnInit {
 
   loadRefresh(event) {
     this.noticiasService.reiniciarPaginacionTitulareNoticias();
-    this.noticiasService.obtenerTitularesDeNoticias()
+    this.noticiasService.obtenerTitulares()
       .pipe(
         finalize(() => {
           event.target.complete();

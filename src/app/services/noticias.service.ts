@@ -25,7 +25,7 @@ export class NoticiasService {
     return this.http.get<T>(query, { headers });
   }
 
-  obtenerTitularesDeNoticias() {
+  obtenerTitulares() {
 
     this.paginaTopHeadlines++;
     console.log('Titulares:', this.paginaTopHeadlines);

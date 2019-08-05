@@ -2,7 +2,8 @@
   <ion-item>
 
     <ion-card-subtitle>
-      <span class="numero-noticia">{{indice}}.</span>{{ noticia.source.name }} - <span class="tiempo">{{ noticia.publishedAt | relativeTime }}</span>
+      <span class="numero-noticia">{{indice}}.</span>{{ noticia.source.name }} - <span
+        class="tiempo">{{ noticia.publishedAt | relativeTime }}</span>
     </ion-card-subtitle>
 
     <ion-button fill="clear" slot="end" (click)="presentActionSheet()">
@@ -18,7 +19,9 @@
 
 
   </ion-card-header>
-  <img (click)="abrirNoticia()" *ngIf="noticia.urlToImage" [src]="noticia.urlToImage" />
+  <!-- Si la imagen no esta diponible oculta el contenido-->
+  <img (click)="abrirNoticia()" *ngIf="noticia.urlToImage" [src]="noticia.urlToImage"
+    onerror="this.style.display='none'" />
 
   <ion-card-content>
 
@@ -26,6 +29,5 @@
     <p>
       {{noticia.description}}
     </p>
-
   </ion-card-content>
 </ion-card>

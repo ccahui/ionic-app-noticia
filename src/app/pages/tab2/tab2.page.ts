@@ -1,8 +1,9 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonSegment, IonInfiniteScroll } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
+
 import { Article } from '../../interfaces/interfaces';
 import { NoticiasService } from '../../services/noticias.service';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab2',
@@ -11,12 +12,9 @@ import { finalize } from 'rxjs/operators';
 })
 export class Tab2Page implements OnInit {
 
-
   categorias = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
-  // categoriaActual: string;
   noticias: Article[];
   isSpinner: boolean;
-
   @ViewChild('segmento', { static: true }) elementSegment: IonSegment;
   @ViewChild(IonInfiniteScroll, { static: true }) elementInfiniteScroll: IonInfiniteScroll;
 
@@ -30,9 +28,6 @@ export class Tab2Page implements OnInit {
     this.obtenerNoticiasPorCategoria(this.elementSegment.value);
   }
 
-  /*
-  * HABILITO INFINITE SCROLL, puede encontrarse DESABILITADO
-  */
   segmentChanged() {
     this.noticias = [];
     this.elementInfiniteScroll.disabled = true;
@@ -40,7 +35,6 @@ export class Tab2Page implements OnInit {
   }
 
   obtenerNoticiasPorCategoria(categoria: string) {
-
     this.isSpinner = true;
     this.noticiaService.obtenerTitularesPorCategoria(categoria)
       .pipe(
@@ -49,18 +43,8 @@ export class Tab2Page implements OnInit {
           this.elementInfiniteScroll.disabled = false;
         }))
       .subscribe(TopHeadlinesCategoria => {
-        console.log('Resultados', TopHeadlinesCategoria.totalResults);
         this.noticias.push(...TopHeadlinesCategoria.articles);
-
       });
-  }
-
-  scrollHorizontalCenter(event) {
-    event.target.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-    });
-
   }
 
   loadDataInfiniteScroll() {
@@ -70,12 +54,21 @@ export class Tab2Page implements OnInit {
           this.elementInfiniteScroll.complete();
         }))
       .subscribe((TopHeadlinesCategoria) => {
-
         if (TopHeadlinesCategoria.articles.length === 0) {
           this.elementInfiniteScroll.disabled = true; // DESABILITO EL INFINITE SCROLL
         }
-        this.noticias.push(...TopHeadlinesCategoria.articles);
-
+        this.appendNoticias(TopHeadlinesCategoria.articles);
       });
+  }
+
+  appendNoticias(noticias: Article[]) {
+    this.noticias.push(...noticias);
+  }
+
+  scrollHorizontalCenter(event) {
+    event.target.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+    });
   }
 }

@@ -32,7 +32,6 @@ export class RelativeTimePipe implements PipeTransform {
     } else if (elapsed < msPerYear) {
       return 'Hace ' + Math.round(elapsed / msPerMonth) + ' meses ';
     } else {
-      console.log('inside the if condition', elapsed);
       return 'Hace ' + Math.round(elapsed / msPerYear) + ' años ';
     }
   }

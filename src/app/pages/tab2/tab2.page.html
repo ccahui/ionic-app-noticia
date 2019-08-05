@@ -5,22 +5,17 @@
     </ion-title>
   </ion-toolbar>
 
-
-  <!-- Default Segment  Esto se puede reutilzar como un componente -->
-  <ion-segment  #segmento (ionChange)="segmentChanged()" scrollable>
-
+  <ion-segment #segmento (ionChange)="segmentChanged()" scrollable>
     <ion-segment-button *ngFor="let categoria of categorias" [value]="categoria"
       (ionSelect)="scrollHorizontalCenter($event)">
       <ion-label class="ion-text-capitalize">{{ categoria }}</ion-label>
     </ion-segment-button>
   </ion-segment>
-
-
-
 </ion-header>
 
 <ion-content>
   <app-noticias [noticias]="noticias" [isSpinner]="isSpinner"></app-noticias>
+
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataInfiniteScroll()">
     <ion-infinite-scroll-content>
     </ion-infinite-scroll-content>

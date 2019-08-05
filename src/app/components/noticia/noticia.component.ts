@@ -58,9 +58,6 @@ export class NoticiaComponent implements OnInit {
           text: 'Cancel',
           icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
         }]
     });
     return actionSheet;
@@ -86,9 +83,6 @@ export class NoticiaComponent implements OnInit {
           text: 'Cancel',
           icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
         }]
     });
     return actionSheet;

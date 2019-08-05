@@ -8,6 +8,7 @@
 
 <ion-content>
   <app-noticias *ngIf="hayNoticiasFavoritos()" [noticias]="dataLocal.noticias"></app-noticias>
+
   <div *ngIf="!hayNoticiasFavoritos()" class="position-center">
     <ion-label color="primary">No hay Favoritos</ion-label>
   </div>

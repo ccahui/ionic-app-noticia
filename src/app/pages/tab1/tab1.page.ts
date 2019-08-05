@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { finalize} from 'rxjs/operators';
+import { IonInfiniteScroll } from '@ionic/angular';
+
 import { NoticiasService } from 'src/app/services/noticias.service';
 import { Article } from 'src/app/interfaces/interfaces';
-import { finalize, delay } from 'rxjs/operators';
-import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -26,7 +27,6 @@ export class Tab1Page implements OnInit {
   }
 
   obtenerTitularesDeNoticiasPrimeraVez() {
-
     this.isSpinner = true;
     this.noticiasService.obtenerTitulares()
       .pipe(
@@ -39,26 +39,7 @@ export class Tab1Page implements OnInit {
       });
   }
 
-  loadDataInfiniteScroll() {
-
-    this.noticiasService.obtenerTitulares()
-      .pipe(
-        finalize(() => {
-          this.elementInfiniteScroll.complete(); // Oculta el Spinner
-        }))
-      .subscribe((TopHeadlines) => {
-        if (TopHeadlines.articles.length === 0) {
-          this.elementInfiniteScroll.disabled = true; // Desabilita InfiniteScroll para su futuro uso
-        }
-        this.noticias.push(...TopHeadlines.articles);
-
-      });
-  }
-  doRefresh(event) {
-    this.loadRefresh(event);
-  }
-
-  loadRefresh(event) {
+  pullToRefresh(event) {
     this.noticiasService.reiniciarPaginacionTitulareNoticias();
     this.noticiasService.obtenerTitulares()
       .pipe(
@@ -69,5 +50,23 @@ export class Tab1Page implements OnInit {
       .subscribe((TopHeadlines) => {
         this.noticias = TopHeadlines.articles;
       });
+  }
+
+  loadDataInfiniteScroll() {
+    this.noticiasService.obtenerTitulares()
+      .pipe(
+        finalize(() => {
+          this.elementInfiniteScroll.complete();
+        }))
+      .subscribe((TopHeadlines) => {
+        if (TopHeadlines.articles.length === 0) {
+          this.elementInfiniteScroll.disabled = true;
+        }
+        this.appendNoticias(TopHeadlines.articles);
+      });
+  }
+
+  appendNoticias(noticias: Article[]) {
+    this.noticias.push(...noticias);
   }
 }

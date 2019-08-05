@@ -22,7 +22,6 @@ export class DataLocalService {
     const noticiasFavoritos = await this.storage.get('favoritos');
     if (noticiasFavoritos) {
       this.noticias = noticiasFavoritos;
-      console.log('Noticias Favoritos', this.noticias.length);
     }
   }
 

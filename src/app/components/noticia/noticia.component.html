@@ -8,7 +8,7 @@
     </ion-card-subtitle>
 
     <ion-buttons slot="end">
-        <ion-icon  name="star"  *ngIf="isTabFavoritos"></ion-icon>
+        <ion-icon  name="star"  *ngIf="noticia.isFavorite"></ion-icon>
         <ion-button fill="clear" color="primary" (click)="presentActionSheet()">
           <ion-icon name="more" slot="icon-only"></ion-icon>
         </ion-button>

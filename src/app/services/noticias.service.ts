@@ -2,6 +2,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TopHeadlines } from '../interfaces/interfaces';
 import { environment } from '../../environments/environment';
+import { filter, map } from 'rxjs/operators';
+import { DataLocalService } from './data-local.service';
 
 const apiURL = environment.apiNoticiasUrl;
 const apiKey = environment.apiKey;
@@ -18,7 +20,7 @@ export class NoticiasService {
   paginaTopHeadlines = 0;
   categoriaActual = '';
   paginaCategoria = 0;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dataService: DataLocalService) { }
 
   ejecutarQuery<T>(query: string) {
     query = apiURL + query;
@@ -29,7 +31,14 @@ export class NoticiasService {
 
     this.paginaTopHeadlines++;
     console.log('Titulares:', this.paginaTopHeadlines);
-    return this.ejecutarQuery<TopHeadlines>(`/top-headlines?country=us&page=${this.paginaTopHeadlines}`);
+    return this.ejecutarQuery<TopHeadlines>(`/top-headlines?country=us&page=${this.paginaTopHeadlines}`).pipe(
+      map((data: TopHeadlines) => {
+        data.articles.forEach(article => {
+          article.isFavorite = this.dataService.isFavorite(article);
+        });
+        return data;
+      })
+    );
   }
 
   obtenerTitularesPorCategoria(categoria: string) {
@@ -41,7 +50,14 @@ export class NoticiasService {
       this.paginaCategoria++;
     }
     console.log('Encabezados:', this.categoriaActual, this.paginaCategoria);
-    return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}&page=${this.paginaCategoria}`);
+    return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}&page=${this.paginaCategoria}`)
+      .pipe(
+        map((data: TopHeadlines) => {
+        data.articles.forEach(article => {
+          article.isFavorite = this.dataService.isFavorite(article);
+        });
+        return data;
+      }));
   }
   reiniciarPaginacionTitulareNoticias() {
     this.paginaTopHeadlines = 0;

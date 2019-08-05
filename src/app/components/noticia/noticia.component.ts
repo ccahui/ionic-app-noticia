@@ -15,7 +15,7 @@ export class NoticiaComponent implements OnInit {
 
   @Input() noticia: Article;
   @Input() indice: number;
-  @Input() isTabFavoritos: boolean;
+
   constructor(private iab: InAppBrowser, private actionSheetController: ActionSheetController,
               private socialSharing: SocialSharing,
               private dataLocal: DataLocalService) { }
@@ -28,7 +28,7 @@ export class NoticiaComponent implements OnInit {
 
   async presentActionSheet() {
 
-    if (this.isTabFavoritos) {
+    if (this.noticia.isFavorite) {
       const actionSheet = await this.actionSheetQuitarDeFavoritos();
       await actionSheet.present();
     } else {
@@ -46,6 +46,7 @@ export class NoticiaComponent implements OnInit {
           icon: 'star',
           handler: () => {
             this.dataLocal.añadirAFavoritos(this.noticia);
+            this.noticia.isFavorite = true;
           }
         }, {
           text: 'Compartir',
@@ -73,6 +74,7 @@ export class NoticiaComponent implements OnInit {
           icon: 'star',
           handler: () => {
             this.dataLocal.quitarDeFavoritos(this.noticia);
+            this.noticia.isFavorite = false;
           }
         }, {
           text: 'Compartir',

@@ -1,7 +1,11 @@
+/**
+ * @author Cristian Cahui
+ */
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Article } from '../interfaces/interfaces';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
+import { Article } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +13,9 @@ import { ToastController } from '@ionic/angular';
 export class DataLocalService {
 
   noticias: Article[] = [];
+
   constructor(private storage: Storage, public toastController: ToastController) {
     this.cargarFavoritosDelStorage();
-  }
-  añadirAFavoritos(noticia: Article) {
-
-    const noticiaRepetida = this.noticias.find(noticiaFavorita => noticiaFavorita.title === noticia.title);
-
-    if (!noticiaRepetida) {
-      this.noticias.unshift(noticia);
-      this.storage.set('favoritos', this.noticias);
-    }
-    this.presentToast('Se ha añadido a Favoritos');
-
-  }
-  quitarDeFavoritos(noticia: Article) {
-
-    this.noticias = this.noticias.filter(noti => noti.title !== noticia.title);
-    this.storage.set('favoritos', this.noticias);
-
-    this.presentToast('Se ha quitado de Favoritos');
   }
 
   private async cargarFavoritosDelStorage() {
@@ -38,6 +25,25 @@ export class DataLocalService {
       console.log('Noticias Favoritos', this.noticias.length);
     }
   }
+
+  añadirAFavoritos(noticia: Article) {
+    if (!this.isFavorite(noticia)) {
+      this.noticias.unshift(noticia);
+      this.storage.set('favoritos', this.noticias);
+    }
+    this.presentToast('Se ha añadido a Favoritos');
+  }
+
+  quitarDeFavoritos(noticia: Article) {
+    this.noticias = this.noticias.filter(noti => noti.title !== noticia.title);
+    this.storage.set('favoritos', this.noticias);
+    this.presentToast('Se ha quitado de Favoritos');
+  }
+
+  isFavorite(noticia: Article) {
+    return this.noticias.some(noticiaA => noticiaA.title === noticia.title);
+  }
+
   async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
       position: 'top',
@@ -45,8 +51,5 @@ export class DataLocalService {
       duration: 1500
     });
     toast.present();
-  }
-  isFavorite(noticia: Article) {
-    return this.noticias.some(noticiaA => noticiaA.title === noticia.title);
   }
 }

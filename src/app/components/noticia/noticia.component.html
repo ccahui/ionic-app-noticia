@@ -1,14 +1,20 @@
 <ion-card>
   <ion-item>
-
+    <span class="numero-noticia ion-text-center" slot="start">{{indice}}.</span>
     <ion-card-subtitle>
-      <span class="numero-noticia">{{indice}}.</span>{{ noticia.source.name }} - <span
-        class="tiempo">{{ noticia.publishedAt | relativeTime }}</span>
+      <div> {{ noticia.source.name }} </div>
+      <div class="tiempo">{{ noticia.publishedAt | relativeTime }}</div>
+
     </ion-card-subtitle>
 
-    <ion-button fill="clear" slot="end" (click)="presentActionSheet()">
-      <ion-icon name="more" slot="icon-only"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="end">
+        <ion-icon  name="star"  *ngIf="isTabFavoritos"></ion-icon>
+        <ion-button fill="clear" color="primary" (click)="presentActionSheet()">
+          <ion-icon name="more" slot="icon-only"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    
+    
 
   </ion-item>
   <ion-card-header>
@@ -26,8 +32,8 @@
   <ion-card-content>
 
     <!-- <div class="ion-hide-sm-down">-->
-    <p>
+    <div>
       {{noticia.description}}
-    </p>
+    </div>
   </ion-card-content>
 </ion-card>

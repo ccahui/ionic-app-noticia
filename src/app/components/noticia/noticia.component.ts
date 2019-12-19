@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Article } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataLocalService } from 'src/app/services/data-local.service';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-noticia',
@@ -17,8 +17,9 @@ export class NoticiaComponent implements OnInit {
   @Input() indice: number;
 
   constructor(private iab: InAppBrowser, private actionSheetController: ActionSheetController,
-              private socialSharing: SocialSharing,
-              private dataLocal: DataLocalService) { }
+    private socialSharing: SocialSharing,
+    private dataLocal: DataLocalService,
+    private platform: Platform) { }
 
   ngOnInit() { }
 
@@ -52,7 +53,7 @@ export class NoticiaComponent implements OnInit {
           text: 'Compartir',
           icon: 'share',
           handler: () => {
-            this.socialSharing.share(this.noticia.title, this.noticia.source.name, this.noticia.url);
+            this.compartirNoticiaPWA();
           },
         }, {
           text: 'Cancel',
@@ -77,7 +78,7 @@ export class NoticiaComponent implements OnInit {
           text: 'Compartir',
           icon: 'share',
           handler: () => {
-            this.socialSharing.share(this.noticia.title, this.noticia.source.name, this.noticia.url);
+            this.compartirNoticiaPWA();
           },
         }, {
           text: 'Cancel',
@@ -87,6 +88,23 @@ export class NoticiaComponent implements OnInit {
     });
     return actionSheet;
   }
-
+  compartirNoticiaPWA() {
+    // Nativo
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(this.noticia.title, this.noticia.source.name, this.noticia.url);
+    } else { // Web Share API Google
+      if (navigator.hasOwnProperty('share')) {
+        navigator['share']({
+          title: this.noticia.title,
+          text: this.noticia.description,
+          url: this.noticia.url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      } else {
+        console.log('No se puede compartir');
+      }
+    }
+  }
 }
 

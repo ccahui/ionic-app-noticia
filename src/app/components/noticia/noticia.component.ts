@@ -17,9 +17,9 @@ export class NoticiaComponent implements OnInit {
   @Input() indice: number;
 
   constructor(private iab: InAppBrowser, private actionSheetController: ActionSheetController,
-              private socialSharing: SocialSharing,
-              private dataLocal: DataLocalService,
-              private platform: Platform) { }
+    private socialSharing: SocialSharing,
+    private dataLocal: DataLocalService,
+    private platform: Platform) { }
 
   ngOnInit() { }
 
@@ -94,7 +94,7 @@ export class NoticiaComponent implements OnInit {
       this.socialSharing.share(this.noticia.title, this.noticia.source.name, this.noticia.url);
     } else { // Web Share API Google
       if (navigator.hasOwnProperty('share')) {
-        navigator.share({
+        navigator['share']({
           title: this.noticia.title,
           text: this.noticia.description,
           url: this.noticia.url,

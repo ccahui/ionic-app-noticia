@@ -26,7 +26,7 @@
 
   </ion-card-header>
   <!-- Si la imagen no esta diponible oculta el contenido-->
-  <img (click)="abrirNoticia()" *ngIf="noticia.urlToImage" [src]="noticia.urlToImage"
+  <img (click)="abrirNoticia()" *ngIf="noticia.image" [src]="noticia.image"
     onerror="this.style.display='none'" />
 
   <ion-card-content>

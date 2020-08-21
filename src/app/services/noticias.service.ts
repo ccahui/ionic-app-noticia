@@ -3,17 +3,15 @@
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { DataLocalService } from './data-local.service';
-import { TopHeadlines, Article } from '../interfaces/interfaces';
+import { RootApiResult, Article } from '../interfaces/interfaces';
+import { throwError } from 'rxjs';
 
 const apiURL = environment.apiNoticiasUrl;
 const apiKey = environment.apiKey;
-const headers = new HttpHeaders({
-  'X-Api-Key': apiKey
-});
 
 @Injectable({
   providedIn: 'root'
@@ -28,16 +26,23 @@ export class NoticiasService {
 
   ejecutarQuery<T>(query: string) {
     query = apiURL + query;
-    return this.http.get<T>(query, { headers });
+    query = query.includes('?') ? query + `&token=${apiKey}&image=required` : query + `?token=${apiKey}&image=required`;
+    return this.http.get<T>(query).pipe(catchError((error) => {
+      let errorMessage = 'Error Service';
+      if (error.status === 429) {
+        errorMessage = 'Api News: you have reached your max request per day';
+      }
+      return throwError(errorMessage);
+    }));
   }
 
   obtenerTitulares() {
     this.paginacionTopHeadline++;
     // La operacion dentro del operador Map es importante
     // de otro modo el atributo de Noticia isFavorite no estaria definido
-    return this.ejecutarQuery<TopHeadlines>(`/top-headlines?country=us&page=${this.paginacionTopHeadline}`)
+    return this.ejecutarQuery<RootApiResult>(`search?q=top-news`)
       .pipe(
-        map((data: TopHeadlines) => {
+        map((data: RootApiResult) => {
           this.agregarAtributoIsFavoritoANoticias(data.articles);
           return data;
         }));
@@ -50,9 +55,9 @@ export class NoticiasService {
     this.paginacionCategoria++;
     // La operacion dentro del operador Map es importante
     // de otro modo el atributo de Noticia isFavorite de no estaria definido
-    return this.ejecutarQuery<TopHeadlines>(`top-headlines?country=us&category=${categoria}&page=${this.paginacionCategoria}`)
+    return this.ejecutarQuery<RootApiResult>(`search?q=${categoria}&page=${this.paginacionCategoria}`)
       .pipe(
-        map((data: TopHeadlines) => {
+        map((data: RootApiResult) => {
           this.agregarAtributoIsFavoritoANoticias(data.articles);
           return data;
         })

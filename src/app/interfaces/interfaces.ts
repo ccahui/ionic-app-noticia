@@ -1,22 +1,20 @@
-// Titulares
-export interface TopHeadlines {
-    status: string;
-    totalResults: number;
+export interface RootApiResult {
+    timestamp: number;
+    articleCount: number;
     articles: Article[];
-}
+  }
+
 export interface Article {
-    source: Source;
-    author?: string;
     title: string;
     description: string;
     url: string;
-    urlToImage: string;
+    image: string;
     publishedAt: string;
-    content?: string;
+    source: Source;
     isFavorite?: boolean;
-}
+  }
 
-interface Source {
-    id?: string;
+export interface Source {
     name: string;
+    url: string;
 }

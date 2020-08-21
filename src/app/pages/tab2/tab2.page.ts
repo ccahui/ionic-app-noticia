@@ -12,7 +12,7 @@ import { NoticiasService } from '../../services/noticias.service';
 })
 export class Tab2Page implements OnInit {
 
-  categorias = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
+  categorias = ['business', 'entertainment', 'world', 'health', 'science', 'sports', 'technology'];
   noticias: Article[];
   isSpinner: boolean;
   @ViewChild('segmento', { static: true }) elementSegment: IonSegment;

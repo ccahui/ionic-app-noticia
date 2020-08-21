@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1598027294655,
+  "timestamp": 1598027511190,
   "index": "https://ccahui.github.io/ionic-app-noticia/index.html",
   "assetGroups": [
     {
@@ -207,8 +207,8 @@
         "https://ccahui.github.io/ionic-app-noticia/common-es2015.9eb290fba2e6508ab1c1.js",
         "https://ccahui.github.io/ionic-app-noticia/common-es5.eef41579b9b3fe6efacb.js",
         "https://ccahui.github.io/ionic-app-noticia/index.html",
-        "https://ccahui.github.io/ionic-app-noticia/main-es2015.50abdd02bc89a047fc5c.js",
-        "https://ccahui.github.io/ionic-app-noticia/main-es5.5672652f2bafe5b14531.js",
+        "https://ccahui.github.io/ionic-app-noticia/main-es2015.246a0b57a70c44cb6216.js",
+        "https://ccahui.github.io/ionic-app-noticia/main-es5.27bd8ebcaa53d1e99340.js",
         "https://ccahui.github.io/ionic-app-noticia/polyfills-es2015.d48a7eba475bdf3a9a91.js",
         "https://ccahui.github.io/ionic-app-noticia/polyfills-es5.0e809981aa2a1db9bdfd.js",
         "https://ccahui.github.io/ionic-app-noticia/runtime-es2015.61d094fc25ef45a9be05.js",
@@ -446,9 +446,9 @@
     "https://ccahui.github.io/ionic-app-noticia/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
     "https://ccahui.github.io/ionic-app-noticia/common-es2015.9eb290fba2e6508ab1c1.js": "420dcf52e7e4afda4332d560e3bef8e2426eae65",
     "https://ccahui.github.io/ionic-app-noticia/common-es5.eef41579b9b3fe6efacb.js": "8dfa54cd74200d0cd7b18dcb1cb03b8d825acb4f",
-    "https://ccahui.github.io/ionic-app-noticia/index.html": "7b8489dfb00b66ce5ec448407f2e12d14dbe38d5",
-    "https://ccahui.github.io/ionic-app-noticia/main-es2015.50abdd02bc89a047fc5c.js": "27a7b1e2739e0008df449bbe3043eb347d802d0c",
-    "https://ccahui.github.io/ionic-app-noticia/main-es5.5672652f2bafe5b14531.js": "ae07bc240946b78dc353e240e0ab9ddf11e73627",
+    "https://ccahui.github.io/ionic-app-noticia/index.html": "d4a2d6233ab59bfd0c354f904782807efed81e19",
+    "https://ccahui.github.io/ionic-app-noticia/main-es2015.246a0b57a70c44cb6216.js": "b14e777bac0ecc8421a418dbb4a5220b96ddb95b",
+    "https://ccahui.github.io/ionic-app-noticia/main-es5.27bd8ebcaa53d1e99340.js": "2404a299a6496052e1e3aecbdf2cd6745d9f3c0a",
     "https://ccahui.github.io/ionic-app-noticia/polyfills-es2015.d48a7eba475bdf3a9a91.js": "54e10d752f0a235a3c9efeeb5f32fce0c97e74ee",
     "https://ccahui.github.io/ionic-app-noticia/polyfills-es5.0e809981aa2a1db9bdfd.js": "674aaa5ba4e461f2be91e48df438434e62f8d19a",
     "https://ccahui.github.io/ionic-app-noticia/runtime-es2015.61d094fc25ef45a9be05.js": "0f637ac7f1d17df97ce10ca173fbf190c0dcc959",
